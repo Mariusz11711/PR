@@ -26,7 +26,7 @@ namespace WebApplication1
         }
 
         [WebMethod]
-        public string AddText(string Title, string Lead, string Content, int CategoryId, string Tags)
+        public string AddText(string Title, string Lead, string Content, int CategoryId, List<int> Tags = null)
         {
             string ret = "Dodano tekst";
 
@@ -40,8 +40,8 @@ namespace WebApplication1
                 temp.Lead = Lead;
                 temp.Content = Content;
                 temp.CategoryId = CategoryId;
-                temp.Tags = Tags;
-
+                temp.Tags = Tags.ToString();
+                temp.IsPublish = 0;
                 context.Art.Add(temp);
                 context.SaveChanges();
             }
@@ -54,7 +54,7 @@ namespace WebApplication1
         }
 
         [WebMethod]
-        public string EditText(string Title = null, string Lead = null, string Content = null, int CategoryId = -1, string Tags = null)
+        public string EditText(string Title = null, string Lead = null, string Content = null, int CategoryId = -1, List<int> Tags = null)
         {
             string ret = "Edytowano tekst";
 
@@ -71,7 +71,7 @@ namespace WebApplication1
                         if (Lead != null) temp.Lead = Lead;
                         if(Context != null) temp.Content = Content;
                         if(CategoryId != -1) temp.CategoryId = CategoryId;
-                        if(Tags != null) temp.Tags = Tags;
+                        if(Tags != null) temp.Tags = Tags.ToString();
                     }
                     db.SaveChanges();
                 }
