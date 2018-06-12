@@ -1,31 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Services;
-using WebApplication1.Models;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
 
-namespace WebApplication1
+namespace WebApplication1.Models
 {
-    /// <summary>
-    /// Summary description for WebService1
-    /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
-    public class WebService1 : System.Web.Services.WebService
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
+    public class Service1 : IService1
     {
-
-        public IEnumerable<int> GetListOfIds(string s)
-        {           
-            List<int> _result = s.Split(',').Select(item => int.Parse(item)).ToList();
-
-            return _result;
+        public void DoWork()
+        {
         }
-
-        [WebMethod]
         public string AddText(string Title, string Lead, string Content, int CategoryId, List<int> Tags = null)
         {
             string ret = "Dodano tekst";
@@ -33,7 +21,7 @@ namespace WebApplication1
             try
             {
                 Art temp = new Art();
-                var context = new Model1();                
+                var context = new Model1();
 
 
                 temp.Title = Title;
@@ -52,8 +40,6 @@ namespace WebApplication1
 
             return ret;
         }
-
-        [WebMethod]
         public string EditText(string Title = null, string Lead = null, string Content = null, int CategoryId = -1, List<int> Tags = null)
         {
             string ret = "Edytowano tekst";
@@ -69,9 +55,9 @@ namespace WebApplication1
 
                         if (Title != null) temp.Title = Title;
                         if (Lead != null) temp.Lead = Lead;
-                        if(Content != null) temp.Content = Content;
-                        if(CategoryId != -1) temp.CategoryId = CategoryId;
-                        if(Tags != null) temp.Tags = Tags.ToString();
+                        if (Content != null) temp.Content = Content;
+                        if (CategoryId != -1) temp.CategoryId = CategoryId;
+                        if (Tags != null) temp.Tags = Tags.ToString();
                     }
                     db.SaveChanges();
                 }
@@ -83,8 +69,6 @@ namespace WebApplication1
 
             return ret;
         }
-
-        [WebMethod]
         public string DeleteText(string Title, int CategoryId)
         {
             string ret = "Usunięto tekst";
@@ -108,8 +92,6 @@ namespace WebApplication1
 
             return ret;
         }
-
-        [WebMethod]
         public string PublishText(string Title, int CategoryId)
         {
             string ret = "Wysłano tekst";
